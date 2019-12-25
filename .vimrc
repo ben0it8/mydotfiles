@@ -3,7 +3,6 @@ let mapleader=","       " leader is comma
 colorscheme elflord
 set encoding=utf-8
 set background=dark
-set clipboard=unnamedplus
 set nocompatible
 set go=a
 set t_Co=256
