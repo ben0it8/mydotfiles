@@ -1,6 +1,7 @@
 "General
 let mapleader=","       " leader is comma
 colorscheme elflord
+set encoding=utf-8
 set background=dark
 set clipboard=unnamedplus
 set nocompatible
@@ -21,6 +22,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'kien/ctrlp.vim'
 Plugin 'vim-scripts/indentpython.vim'
+Plugin 'vim-scripts/Pydiction'
 Plugin 'google/yapf', { 'rtp': 'plugins/vim' }
 Plugin 't9md/vim-choosewin'
 Plugin 'majutsushi/tagbar'
@@ -45,9 +47,16 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-filetype plugin indent  on
+filetype plugin on
 filetype indent on
 
+" Keep indentation level from previous line:
+autocmd FileType python set autoindent
+
+" Make backspaces more powerful
+set backspace=indent,eol,start
+
+" Search
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
 nnoremap <leader><space> :nohlsearch<CR>     " turn off search highlight
@@ -99,10 +108,10 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
+" For full syntax highlighting:
+syntax on
 let python_highlight_all=1
 
-syntax enable
-set encoding=utf-8
 set backupdir=~/vimfiles/tmp,.
 set directory=~/vimfiles/tmp,.
 set autochdir
@@ -127,9 +136,6 @@ au BufNewFile,BufRead *.js,*.html,*.css
 
 set list
 set listchars=tab:>-
-
-set backspace=2 " make backspace work like most other apps
-set backspace=indent,eol,start
 set scrolloff=3
 
 map <Leader>ve :sp $HOME/.vimrc<CR>
@@ -137,6 +143,12 @@ map <Leader>vs :source $HOME/.vimrc<CR>
 
 " Automatically deletes all trailing whitespace on save.
 autocmd BufWritePre * %s/\s\+$//e
+
+" Wrap text after a certain number of characters
+au BufRead,BufNewFile *.py,*.pyw, set textwidth=100
+
+" Use UNIX (\n) line endings.
+au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
 
 " Tagbar -----------------------------
 " toggle tagbar display
