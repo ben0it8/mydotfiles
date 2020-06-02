@@ -47,7 +47,7 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " Plugins
 call plug#begin('~/.vim/plugged')
-Plug 'neoclide/coc.nvim'
+"Plug 'neoclide/coc.nvim'
 "Plug 'neoclide/coc-python'
 "Plug 'neoclide/coc-json'
 "Plug 'neoclide/coc-highlight'
@@ -113,7 +113,7 @@ set backspace=indent,eol,start
 " Search
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
-nnoremap <Leader><,> :nohlsearch<CR>     " turn off search highlight
+nnoremap <Leader>, :nohlsearch<CR>     " turn off search highlight
 
 " Enable autocompletion:
 set wildmenu
