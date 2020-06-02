@@ -1,44 +1,99 @@
 "General
-let mapleader=","       " leader is comma
-colorscheme elflord
-set encoding=utf-8
-set background=dark
+syntax on
+
+set guicursor=
+set noshowmatch
+set nohlsearch
+set hidden
+set noerrorbells
+set tabstop=4 softtabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set nu
+set nowrap
+set smartcase
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set termguicolors
+set scrolloff=8
+set list
+set listchars=tab:>-
 set nocompatible
 set go=a
+set encoding=utf-8
 set t_Co=256
 set mouse=a
 set clipboard+=unnamedplus
 set lazyredraw
 set showmatch
 
-"vundle stuff
-set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'kien/ctrlp.vim'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'vim-scripts/Pydiction'
-Plugin 'google/yapf', { 'rtp': 'plugins/vim' }
-Plugin 't9md/vim-choosewin'
-Plugin 'majutsushi/tagbar'
-Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'wikitopian/hardmode'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'edkolev/tmuxline.vim'
+" Give more space for displaying messages.
+set cmdheight=2
 
-call vundle#end()            " required
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=50
 
-let g:airline_theme='solarized'
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
 
-"split navigations
+set colorcolumn=80
+highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+" Plugins
+call plug#begin('~/.vim/plugged')
+Plug 'neoclide/coc.nvim'
+"Plug 'neoclide/coc-python'
+"Plug 'neoclide/coc-json'
+"Plug 'neoclide/coc-highlight'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'mbbill/undotree'
+"Plug 'kien/ctrlp.vim'
+Plug 'vim-scripts/indentpython.vim'
+"Plug 'vim-scripts/Pydiction'
+Plug 'google/yapf', { 'rtp': 'plugins/vim' }
+Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'wikitopian/hardmode'
+Plug 'sheerun/vim-polyglot'
+" Color stuff
+Plug 'gruvbox-community/gruvbox'
+Plug 'sainnhe/gruvbox-material'
+Plug 'phanviet/vim-monokai-pro'
+Plug 'vim-airline/vim-airline'
+Plug 'flazz/vim-colorschemes'
+"Plug 'edkolev/tmuxline.vim'
+" Initialize plugin system
+call plug#end()
+
+" Set colors
+colorscheme gruvbox-material
+set background=dark
+
+" Suppress coc warning
+let g:coc_disable_startup_warning = 1
+
+if executable('rg')
+    let g:rg_derive_root='true'
+endif
+
+let loaded_matchparen = 1
+let mapleader =  " "
+
+let g:netrw_browse_split = 2
+let g:vrfr_rg = 'true'
+let g:netrw_banner = 0
+let g:netrw_winsize = 25
+
 set splitbelow
 set splitright
 nnoremap <C-J> <C-W><C-J>
@@ -58,7 +113,7 @@ set backspace=indent,eol,start
 " Search
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
-nnoremap <leader><space> :nohlsearch<CR>     " turn off search highlight
+nnoremap <Leader><,> :nohlsearch<CR>     " turn off search highlight
 
 " Enable autocompletion:
 set wildmenu
@@ -72,18 +127,13 @@ augroup numbertoggle
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
-
 " space open/closes folds
 set foldenable
-nnoremap <space> za
+nnoremap <,> za
 set foldcolumn=3
 set foldlevel=99
 set foldlevelstart=10   " open most folds by default
 set foldmethod=indent   " fold based on indent level
-
-"Choosewin
-let g:choosewin_overlay_enable = 1
-nmap  -  <Plug>(choosewin)
 
 "Alternate bg color
 "call togglebg#map("<F5>")
@@ -133,10 +183,6 @@ au BufNewFile,BufRead *.js,*.html,*.css
     \ set softtabstop=2 |
     \ set shiftwidth=2 |
 
-set list
-set listchars=tab:>-
-set scrolloff=3
-
 map <Leader>ve :sp $HOME/.vimrc<CR>
 map <Leader>vs :source $HOME/.vimrc<CR>
 
@@ -165,8 +211,8 @@ nnoremap B ^
 nnoremap E $
 
 " $/^ doesn't do anything
-nnoremap $ <nop>
-nnoremap ^ <nop>
+"nnoremap $ <nop>
+"nnoremap ^ <nop>
 
 " save session
 nnoremap <leader>s :mksession<CR>
@@ -179,3 +225,34 @@ else
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
+
+
+" GoTo code navigation.
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gy <Plug>(coc-type-definition)
+nmap <leader>gi <Plug>(coc-implementation)
+nmap <leader>gr <Plug>coc-references)(
+nmap <leader>rr <Plug>(coc-rename)
+nmap <leader>g[ <Plug>(coc-diagnostic-prev)
+nmap <leader>g] <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>gp <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>gn <Plug>(coc-diagnostic-next)
+nnoremap <leader>cr :CocRestart
+
+" Sweet Sweet FuGITive
+nmap <leader>gh :diffget //3<CR>
+nmap <leader>gu :diffget //2<CR>
+nmap <leader>gs :G<CR>
+
+" GFiles
+nnoremap <C-p> :GFiles<CR>
+
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
+autocmd BufWritePre * :call TrimWhitespace()
+
+map <F7> gg=G<C-o><C-o>
