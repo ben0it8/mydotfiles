@@ -110,7 +110,21 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 export PATH="$HOME/.cargo/bin:$PATH"
 
+alias ws01='ssh oliver@ws01.aignostics.com'
 alias st='st -e tmux'
 alias dev='cd /home/oliver/dev/mono && source .venv/bin/activate'
 alias python='python3.7'
 alias pip='pip3'
+export TERM=xterm-color
+alias vim="nvim"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/oliver/google-cloud-sdk/path.zsh.inc' ]; then . '/home/oliver/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/oliver/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/oliver/google-cloud-sdk/completion.zsh.inc'; fi
+
+
+export PYTHONPATH="${PYTHONPATH}:/home/oliver/dev/mono"
+alias google='{read -r arr; browser "https://google.com/search?q=${arr}";} <<<'
+

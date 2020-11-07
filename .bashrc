@@ -123,22 +123,13 @@ if ! shopt -oq posix; then
     fi
 fi
 
-function jpstart() {
-    # Fires-up a Jupyter notebook by supplying a specific port
-    nohup jupyter notebook --no-browser --port=$1 &
-}
 
 # Paths and cds
 PYTHONPATH="${PYTHONPATH}:/home/oliver/Develop/mono"
 export PYTHONPATH
 PATH="${PATH}:/home/oliver/Develop/mono"
 export PATH
-alias DEV='/home/oliver/Develop'
-alias tissue='cd /mnt/data01/projects/tissue_segmentation'
-alias wsis='cd /mnt/data02/pelago/frozen/wsis'
-alias projects='cd /mnt/data01/projects'
-alias scripts='cd /home/oliver/Develop/mono/backend/ml/scripts'
-alias share='cd /mnt/share01'
+
 # Cluster aliases
 alias ws03='ssh ws03'
 alias ws02='ssh ws02'
@@ -173,8 +164,6 @@ alias fmtbackend='dev && yapf -i -r backend --style="{based_on_style: google, CO
 # Start docker dev
 alias dockerdev='dev && python docker/docker.py develop --gpus=0'
 
-# # Modify bash prompt to show brnahc
-# export PS1="\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]$ "
 
 # Alias for sourcing bashrc
 alias sbrc='source ~/.bashrc'
@@ -183,6 +172,7 @@ alias brc='vim ~/.bashrc'
 alias sortbackend='isort --recursive --force-single-line-imports --force-alphabetical-sort-within-sections /home/oliver/mono/backend'
 alias grep='grep --color=auto'
 alias ls='ls -lah'
+
 # Set editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
