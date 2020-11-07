@@ -130,10 +130,6 @@ export PYTHONPATH
 PATH="${PATH}:/home/oliver/Develop/mono"
 export PATH
 
-# Cluster aliases
-alias ws03='ssh ws03'
-alias ws02='ssh ws02'
-
 # Jupyter stuff
 alias nbstart='nohup jupyter notebook --no-browser &'
 alias nblist='jupyter notebook list'
