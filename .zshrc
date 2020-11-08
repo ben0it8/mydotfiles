@@ -115,6 +115,7 @@ alias python='python3.7'
 alias pip='pip3'
 export TERM=xterm-color
 alias vim="nvim"
+alias tmux="tmux -2u"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/oliver/google-cloud-sdk/path.zsh.inc' ]; then . '/home/oliver/google-cloud-sdk/path.zsh.inc'; fi
