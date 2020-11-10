@@ -42,20 +42,20 @@ Plug 'ryanoasis/vim-devicons'
 " Auto pairs for '(' '[' '{'
 Plug 'jiangmiao/auto-pairs'
 " Tags
-Plug 'liuchengxu/vista.vim'
 " Plug 'majutsushi/tagbar'
 " Closetags
 Plug 'alvan/vim-closetag'
 " Themes
 Plug 'sainnhe/gruvbox-material'
+Plug 'christianchiarulli/nvcode-color-schemes.vim'
 " Plug 'christianchiarulli/onedark.vim'
 " Plug 'kaicataldo/material.vim'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'tomasiser/vim-code-dark'
 " Intellisense
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'davidhalter/jedi-vim'
-Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'davidhalter/jedi-vim'
+"Plug 'deoplete-plugins/deoplete-jedi'
 
 " Status Line
 " Plug 'vim-airline/vim-airline'
@@ -78,8 +78,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'voldikss/vim-floaterm'
 " Start Screen
 Plug 'mhinz/vim-startify'
-" Vista
-Plug 'liuchengxu/vista.vim'
 " Zen mode
 Plug 'junegunn/goyo.vim'
 " Snippets
@@ -152,7 +150,7 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 
 " Color
-colorscheme gruvbox-material
+colorscheme nvcode
 set background=dark
 
 
@@ -294,16 +292,16 @@ else
 endif
 
 " GoTo code navigation.
-"nmap <leader>gd <Plug>(coc-definition)
-"nmap <leader>gy <Plug>(coc-type-definition)
-"nmap <leader>gi <Plug>(coc-implementation)
-"nmap <leader>gr <Plug>coc-references)(
-"nmap <leader>rr <Plug>(coc-rename)
-"nmap <leader>g[ <Plug>(coc-diagnostic-prev)
-"nmap <leader>g] <Plug>(coc-diagnostic-next)
-"nmap <silent> <leader>gp <Plug>(coc-diagnostic-prev)
-"nmap <silent> <leader>gn <Plug>(coc-diagnostic-next)
-"nnoremap <leader>cr :CocRestart
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gy <Plug>(coc-type-definition)
+nmap <leader>gi <Plug>(coc-implementation)
+nmap <leader>gr <Plug>coc-references)(
+nmap <leader>rr <Plug>(coc-rename)
+nmap <leader>g[ <Plug>(coc-diagnostic-prev)
+nmap <leader>g] <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>gp <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>gn <Plug>(coc-diagnostic-next)
+nnoremap <leader>cr :CocRestart
 
 " Sweet Sweet FuGITive
 nmap <leader>gl :diffget //3<CR>
@@ -368,19 +366,6 @@ let g:jedi#show_call_signatures = "1"
 let g:pymode_rope = 0
 let g:jedi#completions_enabled = 1
 
-" Vista
-map <F4> :Vista!!<CR>
-function! NearestMethodOrFunction() abort
-  return get(b:, 'vista_nearest_method_or_function', '')
-endfunction
-
-set statusline+=%{NearestMethodOrFunction()}
-
-" By default vista.vim never run if you don't call it explicitly.
-"
-" If you want to show the nearest function in your statusline automatically,
-" you can add the following line to your vimrc
-autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 " Lightline
 let g:lightline = {
@@ -432,8 +417,6 @@ function! DefaultWorkspace()
 "    Explore /home/oliver/dev/mono
     cd /home/oliver/dev/mono
     file editor
-"    vnew
-"
     vsp term://zsh
     vertical resize -30
     file shell\ \#1
@@ -444,7 +427,78 @@ function! DefaultWorkspace()
     wincmd k
     wincmd h
 
-"    wincmd q
 endfunction
 
 command! -register Default call DefaultWorkspace()
+
+" Basic Key Mappings
+imap <C-h> <C-w>h
+imap <C-j> <C-w>j
+imap <C-k> <C-w>k
+imap <C-l> <C-w>l
+
+nnoremap <Space> <Nop>
+
+" Better indenting
+vnoremap < <gv
+vnoremap > >gv
+
+" I hate escape more than anything else
+inoremap jk <Esc>
+inoremap kj <Esc>
+
+" TAB in general mode will move to text buffer
+nnoremap <silent> <TAB> :bnext<CR>
+" SHIFT-TAB will go back
+nnoremap <silent> <S-TAB> :bprevious<CR>
+
+" Move selected line / block of text in visual mode
+" shift + k to move up
+" shift + j to move down
+xnoremap K :move '<-2<CR>gv-gv
+xnoremap J :move '>+1<CR>gv-gv
+
+" Alternate way to save
+nnoremap <silent> <C-s> :w<CR>
+" Alternate way to quit
+nnoremap <silent> <C-Q> :wq!<CR>
+" Use control-c instead of escape
+nnoremap <silent> <C-c> <Esc>
+" <TAB>: completion.
+inoremap <silent> <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" Better window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Terminal window navigation
+tnoremap <C-h> <C-\><C-N><C-w>h
+tnoremap <C-j> <C-\><C-N><C-w>j
+tnoremap <C-k> <C-\><C-N><C-w>k
+tnoremap <C-l> <C-\><C-N><C-w>l
+inoremap <C-h> <C-\><C-N><C-w>h
+inoremap <C-j> <C-\><C-N><C-w>j
+inoremap <C-k> <C-\><C-N><C-w>k
+inoremap <C-l> <C-\><C-N><C-w>l
+tnoremap <Esc> <C-\><C-n>
+
+nnoremap <silent> <C-Up>    :resize -2<CR>
+nnoremap <silent> <C-Down>  :resize +2<CR>
+nnoremap <silent> <C-Left>  :vertical resize -2<CR>
+nnoremap <silent> <C-Right> :vertical resize +2<CR>
+
+" Floaterm
+let g:floaterm_keymap_toggle = '<F1>'
+let g:floaterm_keymap_next   = '<F2>'
+let g:floaterm_keymap_prev   = '<F3>'
+let g:floaterm_keymap_new    = '<F4>'
+
+let g:floaterm_gitcommit='floaterm'
+let g:floaterm_autoinsert=1
+let g:floaterm_width=0.8
+let g:floaterm_height=0.8
+let g:floaterm_wintitle=0
+let g:floaterm_autoclose=1
+
